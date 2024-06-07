@@ -8,6 +8,9 @@
 
 ```bash
 swag init -g cmd/main.go
+```
+
+```bash
 go run ./cmd
 ```
 
