@@ -2,7 +2,9 @@
 
 Simple golang backend service using [Gin](https://gin-gonic.com/) framework.
 
-<img url="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" width="100px" height="100px"><img/>
+<img src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" align="center" width="200" />
+
+Gin is a HTTP web framework written in Go (Golang). It features a Martini-like API with much better performance -- up to 40 times faster.
 
 ## Run Application
 
