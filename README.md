@@ -1,6 +1,10 @@
-# gin-test
+# Simple Golang Backend (GIN)
 
-### Run Application
+Simple golang backend service using [Gin](https://gin-gonic.com/) framework.
+
+<img url="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png" width="100px" height="100px"><img/>
+
+## Run Application
 
 1.  Copy `.env.example` file and paste it within same directory
 2.  Rename it as `.env`
