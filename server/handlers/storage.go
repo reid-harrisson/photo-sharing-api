@@ -1,13 +1,12 @@
 package handlers
 
 import (
-	"fmt"
-	"gin-test/responses"
-	"gin-test/server"
-	"gin-test/services/storage"
 	"mime/multipart"
 	"net/http"
 	"path/filepath"
+	"photo-sharing-api/responses"
+	"photo-sharing-api/server"
+	"photo-sharing-api/services/storage"
 
 	"github.com/google/uuid"
 
@@ -51,27 +50,26 @@ func (handler *StorageHandler) UploadImage(context *gin.Context) {
 	}
 
 	// Generate unique filename
-	ext := filepath.Ext(file.Filename)
-	newFileName := fmt.Sprintf("%s%s", uuid.New().String(), ext)
+	newFileName := uuid.New().String() + filepath.Ext(file.Filename)
 
 	// Open the file
 	fileContent, err := file.Open()
 	if err != nil {
-		responses.ErrorResponse(context, http.StatusInternalServerError, "Error processing file: "+err.Error())
+		responses.ErrorResponse(context, http.StatusInternalServerError, "Error processing file")
 		return
 	}
 	defer fileContent.Close()
 
 	err = handler.Service.EnsureBucket()
 	if err != nil {
-		responses.ErrorResponse(context, http.StatusInternalServerError, "Error creating Supabase Bucket: "+err.Error())
+		responses.ErrorResponse(context, http.StatusInternalServerError, "Error creating Supabase Bucket")
 		return
 	}
 
 	// Upload and get the public URL
 	publicURL, err := handler.Service.UploadImage(newFileName, fileContent)
 	if err != nil {
-		responses.ErrorResponse(context, http.StatusInternalServerError, "Error uploading to Supabase: "+err.Error())
+		responses.ErrorResponse(context, http.StatusInternalServerError, "Error uploading to Supabase")
 		return
 	}
 
