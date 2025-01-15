@@ -4,37 +4,39 @@ import (
 	"fmt"
 	"gin-test/responses"
 	"gin-test/server"
+	"gin-test/services/storage"
 	"mime/multipart"
 	"net/http"
 	"path/filepath"
 
 	"github.com/google/uuid"
-	storage_go "github.com/supabase-community/storage-go"
 
 	"github.com/gin-gonic/gin"
 )
 
-type HandlerUpload struct {
-	Server *server.Server
+type StorageHandler struct {
+	Server  *server.Server
+	Service *storage.StorageService
 }
 
-func NewHandlerUpload(server *server.Server) *HandlerUpload {
-	return &HandlerUpload{
-		Server: server,
+func NewStorageHandler(server *server.Server) *StorageHandler {
+	return &StorageHandler{
+		Server:  server,
+		Service: storage.NewStorageService(server.SupabaseClient),
 	}
 }
 
-// UploadImage godoc
-// @Summary Upload image to Supabase
+// Storage godoc
+// @Summary Upload image to Supabase Storage
 // @Schemes
-// @Description Upload image to Supabase
-// @Tags Upload
+// @Description Upload image to Supabase Storage
+// @Tags Storage
 // @Accept multipart/form-data
 // @Produce json
 // @Param image formData file true "Image file to upload"
 // @Success 200 {object} responses.Data
-// @Router /upload [post]
-func (handler *HandlerUpload) UploadImage(context *gin.Context) {
+// @Router /storage [post]
+func (handler *StorageHandler) UploadImage(context *gin.Context) {
 	// Get the file from the request
 	file, err := context.FormFile("image")
 	if err != nil {
@@ -55,37 +57,23 @@ func (handler *HandlerUpload) UploadImage(context *gin.Context) {
 	// Open the file
 	fileContent, err := file.Open()
 	if err != nil {
-		responses.ErrorResponse(context, http.StatusInternalServerError, "Error processing file")
+		responses.ErrorResponse(context, http.StatusInternalServerError, "Error processing file: "+err.Error())
 		return
 	}
 	defer fileContent.Close()
 
-	// Upload to Supabase Storage
-	bucketId := "image-bucket"
-
-	_, err = handler.Server.SupabaseClient.GetBucket(bucketId)
+	err = handler.Service.EnsureBucket()
 	if err != nil {
-		_, err = handler.Server.SupabaseClient.CreateBucket(bucketId, storage_go.BucketOptions{
-			Public: true,
-		})
-
-		if err != nil {
-			responses.ErrorResponse(context, http.StatusInternalServerError, "Error creating Supabase Bucket: "+err.Error())
-			return
-		}
+		responses.ErrorResponse(context, http.StatusInternalServerError, "Error creating Supabase Bucket: "+err.Error())
+		return
 	}
 
-	contextType := "File"
-	_, err = handler.Server.SupabaseClient.UploadFile(bucketId, newFileName, fileContent, storage_go.FileOptions{
-		ContentType: &contextType,
-	})
+	// Upload and get the public URL
+	publicURL, err := handler.Service.UploadImage(newFileName, fileContent)
 	if err != nil {
 		responses.ErrorResponse(context, http.StatusInternalServerError, "Error uploading to Supabase: "+err.Error())
 		return
 	}
-
-	// Get the public URL
-	publicURL := handler.Server.SupabaseClient.GetPublicUrl(bucketId, newFileName)
 
 	responses.Response(context, http.StatusOK, gin.H{
 		"message": "Image uploaded successfully!",

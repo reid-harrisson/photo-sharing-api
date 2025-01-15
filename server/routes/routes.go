@@ -18,18 +18,18 @@ func ConfigureRoutes(server *server.Server) {
 	groupHealth := apiV1.Group("/health")
 	GroupHealth(groupHealth, server)
 
-	groupUpload := apiV1.Group("/upload")
-	GroupUpload(groupUpload, server)
+	groupStorage := apiV1.Group("/storage")
+	GroupStorage(groupStorage, server)
 
 	server.Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
 
 func GroupHealth(group *gin.RouterGroup, server *server.Server) {
-	handler := handlers.NewHandlerHealth(server)
+	handler := handlers.NewHealthHandler(server)
 	group.GET("/", handler.HealthCheck)
 }
 
-func GroupUpload(group *gin.RouterGroup, server *server.Server) {
-	handler := handlers.NewHandlerUpload(server)
+func GroupStorage(group *gin.RouterGroup, server *server.Server) {
+	handler := handlers.NewStorageHandler(server)
 	group.POST("/", handler.UploadImage)
 }

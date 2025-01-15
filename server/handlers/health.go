@@ -8,12 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type HandlerHealth struct {
+type HealthHandler struct {
 	Server *server.Server
 }
 
-func NewHandlerHealth(server *server.Server) *HandlerHealth {
-	return &HandlerHealth{
+func NewHealthHandler(server *server.Server) *HealthHandler {
+	return &HealthHandler{
 		Server: server,
 	}
 }
@@ -27,6 +27,6 @@ func NewHandlerHealth(server *server.Server) *HandlerHealth {
 // @Produce json
 // @Success 200 {object} responses.Data
 // @Router /health [get]
-func (handler *HandlerHealth) HealthCheck(context *gin.Context) {
+func (handler *HealthHandler) HealthCheck(context *gin.Context) {
 	responses.MessageResponse(context, http.StatusOK, "Server is running!")
 }
