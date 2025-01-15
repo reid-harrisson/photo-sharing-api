@@ -1,2 +1,3 @@
 # Swagger documentation
 docs/*.*
+.env
