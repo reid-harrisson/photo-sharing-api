@@ -26,7 +26,12 @@ func main() {
 		log.Println("Failed to load environment.")
 	}
 
-	server := server.NewServer()
+	supabaseUrl, supabaseAnonKey := os.Getenv("SUPABASE_URL"), os.Getenv("SUPABASE_ANON_KEY")
+	if supabaseUrl == "" || supabaseAnonKey == "" {
+		log.Println("Failed to load environment.")
+	}
+
+	server := server.NewServer(supabaseUrl, supabaseAnonKey)
 
 	routes.ConfigureRoutes(server)
 
