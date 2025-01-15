@@ -75,7 +75,7 @@ func (handler *HandlerUpload) UploadImage(context *gin.Context) {
 		}
 	}
 
-	contextType := context.ContentType()
+	contextType := "File"
 	_, err = handler.Server.SupabaseClient.UploadFile(bucketId, newFileName, fileContent, storage_go.FileOptions{
 		ContentType: &contextType,
 	})
