@@ -1,10 +1,10 @@
 package main
 
 import (
-	"gin-test/server"
-	"gin-test/server/routes"
 	"log"
 	"os"
+	"photo-sharing-api/server"
+	"photo-sharing-api/server/routes"
 
 	"github.com/joho/godotenv"
 )

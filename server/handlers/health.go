@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"gin-test/responses"
-	"gin-test/server"
 	"net/http"
+	"photo-sharing-api/responses"
+	"photo-sharing-api/server"
 
 	"github.com/gin-gonic/gin"
 )

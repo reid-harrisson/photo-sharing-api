@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"gin-test/server"
-	"gin-test/server/handlers"
+	"photo-sharing-api/server"
+	"photo-sharing-api/server/handlers"
 
-	docs "gin-test/docs"
+	docs "photo-sharing-api/docs"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
