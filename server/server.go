@@ -1,14 +1,21 @@
 package server
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	storage_go "github.com/supabase-community/storage-go"
+)
 
 type Server struct {
-	Router *gin.Engine
+	Router         *gin.Engine
+	SupabaseClient *storage_go.Client
 }
 
-func NewServer() *Server {
+func NewServer(supabaseUrl, supabaseKey string) *Server {
+	client := storage_go.NewClient(supabaseUrl+"/storage/v1", supabaseKey, nil)
+
 	return &Server{
-		Router: gin.Default(),
+		Router:         gin.Default(),
+		SupabaseClient: client,
 	}
 }
 
