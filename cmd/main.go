@@ -9,10 +9,10 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// @Title Gin Test
+// @Title Photo Sharing API
 // @Version 1.0
 // @BasePath /api/v1
-
+// @Description RESTful API endpoints for Photo Sharing Application
 func main() {
 	// Load environment
 	err := godotenv.Load(".env")

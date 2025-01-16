@@ -9,7 +9,8 @@ definitions:
     type: object
 info:
   contact: {}
-  title: Gin Test
+  description: RESTful API endpoints for Photo Sharing Application
+  title: Photo Sharing API
   version: "1.0"
 paths:
   /health:
