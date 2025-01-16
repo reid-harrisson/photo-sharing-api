@@ -4,5 +4,8 @@
       "GO_BUILD_FLAGS": "-ldflags '-s -w'"
     }
   },
-  "routes": [{ "src": "/(.*)", "dest": "/api/index.go" }]
+  "routes": [
+    { "src": "/swagger/(.*)", "dest": "/api/index.go" },
+    { "src": "/(.*)", "dest": "/api/index.go" }
+  ]
 }
