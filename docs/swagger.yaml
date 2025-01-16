@@ -1,0 +1,51 @@
+basePath: /api/v1
+definitions:
+  responses.Data:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: Gin Test
+  version: "1.0"
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Health check
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.Data'
+      summary: Health check
+      tags:
+      - Health
+  /storage:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload image to Supabase Storage
+      parameters:
+      - description: Image file to upload
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.Data'
+      summary: Upload image to Supabase Storage
+      tags:
+      - Storage
+swagger: "2.0"
