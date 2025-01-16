@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"net/http"
 	"photo-sharing-api/server"
 	"photo-sharing-api/server/handlers"
 
@@ -22,6 +23,10 @@ func ConfigureRoutes(server *server.Server) {
 	GroupStorage(groupStorage, server)
 
 	server.Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	server.Router.GET("/", func(context *gin.Context) {
+		context.Redirect(http.StatusMovedPermanently, "/swagger/index.html")
+	})
 }
 
 func GroupHealth(group *gin.RouterGroup, server *server.Server) {

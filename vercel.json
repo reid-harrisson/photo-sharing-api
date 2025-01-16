@@ -6,6 +6,7 @@
   },
   "routes": [
     { "src": "/swagger/(.*)", "dest": "/api/index.go" },
+    { "src": "/api/v1/(.*)", "dest": "/api/index.go" },
     { "src": "/(.*)", "dest": "/api/index.go" }
   ]
 }
