@@ -7,8 +7,6 @@ import (
 	"os"
 	s "photo-sharing-api/server"
 	"photo-sharing-api/server/routes"
-
-	"github.com/joho/godotenv"
 )
 
 var (
@@ -16,12 +14,6 @@ var (
 )
 
 func init() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Println("Failed to load environment.")
-		return
-	}
-
 	serverPort := os.Getenv("SERVER_PORT")
 	if serverPort == "" {
 		log.Println("Failed to load environment.")
