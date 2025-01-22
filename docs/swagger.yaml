@@ -7,6 +7,19 @@ definitions:
       message:
         type: string
     type: object
+  responses.Error:
+    properties:
+      code:
+        type: integer
+      error:
+        type: string
+    type: object
+  responses.ResponseStorage:
+    properties:
+      url:
+        example: https://example.com/123.jpg
+        type: string
+    type: object
 info:
   contact: {}
   description: RESTful API endpoints for Photo Sharing Application
@@ -45,7 +58,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/responses.Data'
+            $ref: '#/definitions/responses.ResponseStorage'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/responses.Error'
       summary: Upload image to Supabase Storage
       tags:
       - Storage
