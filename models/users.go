@@ -14,7 +14,7 @@ type Users struct {
 	Email     string     `gorm:"email; type:varchar(100)"`
 	Username  string     `gorm:"username; type:varchar(100)"`
 	Password  string     `gorm:"password; type:varchar(100)"`
-	Gendar    string     `gorm:"gendar; type:varchar(100)"`
+	Gender    string     `gorm:"gender; type:varchar(100)"`
 	Age       uint8      `gorm:"age; type:tinyint(4) unsigned"`
 	Birthday  *time.Time `gorm:"birthday"`
 	Address   string     `gorm:"address; type:varchar(100)"`
