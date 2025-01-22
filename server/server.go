@@ -3,19 +3,20 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	storage_go "github.com/supabase-community/storage-go"
+	"gorm.io/gorm"
 )
 
 type Server struct {
 	Router         *gin.Engine
 	SupabaseClient *storage_go.Client
+	DB             *gorm.DB
 }
 
-func NewServer(supabaseUrl, supabaseKey string) *Server {
-	client := storage_go.NewClient(supabaseUrl+"/storage/v1", supabaseKey, nil)
-
+func NewServer(supabaseClient *storage_go.Client, postgrestDB *gorm.DB) *Server {
 	return &Server{
 		Router:         gin.Default(),
-		SupabaseClient: client,
+		SupabaseClient: supabaseClient,
+		DB:             postgrestDB,
 	}
 }
 
