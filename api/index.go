@@ -23,7 +23,7 @@ func init() {
 	supabaseClient := storage_go.NewClient(supabaseUrl+"/storage/v1", supabaseAnonKey, nil)
 	postgresDB := db.Init(postgresUser, postgresHost, postgresPassword, postgresDatabase, postgresPort)
 
-	server := s.NewServer(supabaseClient, postgresDB)
+	server = s.NewServer(supabaseClient, postgresDB)
 
 	routes.ConfigureRoutes(server)
 }
