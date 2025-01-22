@@ -8,34 +8,32 @@ import (
 )
 
 type ResponseUser struct {
-	ID        uint       `json:"id"`
-	CreatedAt time.Time  `json:"created_at"`
-	FirstName string     `json:"first_name"`
-	LastName  string     `json:"last_name"`
-	Email     string     `json:"email"`
-	Username  string     `json:"username"`
-	Password  string     `json:"password"`
-	Gendar    string     `json:"gendar"`
-	Age       uint8      `json:"age"`
-	Birthday  *time.Time `json:"birthday"`
-	Address   string     `json:"address"`
-	City      string     `json:"city"`
-	State     string     `json:"state"`
-	Country   string     `json:"country"`
+	ID        uint   `json:"id"`
+	CreatedAt string `json:"created_at"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Email     string `json:"email"`
+	Username  string `json:"username"`
+	Gender    string `json:"gender"`
+	Age       uint8  `json:"age"`
+	Birthday  string `json:"birthday"`
+	Address   string `json:"address"`
+	City      string `json:"city"`
+	State     string `json:"state"`
+	Country   string `json:"country"`
 }
 
 func NewResponseUser(context *gin.Context, statusCode int, user models.Users) {
 	Response(context, statusCode, ResponseUser{
 		ID:        user.ID,
-		CreatedAt: user.CreatedAt,
+		CreatedAt: user.CreatedAt.Format(time.RFC3339),
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Email:     user.Email,
 		Username:  user.Username,
-		Password:  user.Password,
-		Gendar:    user.Gendar,
+		Gender:    user.Gender,
 		Age:       user.Age,
-		Birthday:  user.Birthday,
+		Birthday:  user.Birthday.Format(time.RFC3339),
 		Address:   user.Address,
 		City:      user.City,
 		State:     user.State,
@@ -48,15 +46,14 @@ func NewResponseUsers(context *gin.Context, statusCode int, users []models.Users
 	for _, user := range users {
 		responseUsers = append(responseUsers, ResponseUser{
 			ID:        user.ID,
-			CreatedAt: user.CreatedAt,
+			CreatedAt: user.CreatedAt.Format(time.RFC3339),
 			FirstName: user.FirstName,
 			LastName:  user.LastName,
 			Email:     user.Email,
 			Username:  user.Username,
-			Password:  user.Password,
-			Gendar:    user.Gendar,
+			Gender:    user.Gender,
 			Age:       user.Age,
-			Birthday:  user.Birthday,
+			Birthday:  user.Birthday.Format(time.RFC3339),
 			Address:   user.Address,
 			City:      user.City,
 			State:     user.State,
