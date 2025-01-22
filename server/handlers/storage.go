@@ -33,7 +33,9 @@ func NewStorageHandler(server *server.Server) *StorageHandler {
 // @Accept multipart/form-data
 // @Produce json
 // @Param image formData file true "Image file to upload"
-// @Success 200 {object} responses.Data
+// @Success 200 {object} responses.ResponseStorage
+// @Failure 400 {object} responses.Error
+// @Failure 500 {object} responses.Error
 // @Router /storage [post]
 func (handler *StorageHandler) UploadImage(context *gin.Context) {
 	// Get the file from the request
