@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"photo-sharing-api/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -25,6 +26,8 @@ func Init(
 	if err != nil {
 		panic(err.Error())
 	}
+
+	db.AutoMigrate(&models.Users{})
 
 	return db
 }
