@@ -4,8 +4,6 @@ import (
 	"photo-sharing-api/models"
 	"photo-sharing-api/requests"
 	"time"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
 func (service *UserService) Update(userId uint, modelUser *models.Users, requestUser *requests.RequestUpdateUser) error {
@@ -17,12 +15,6 @@ func (service *UserService) Update(userId uint, modelUser *models.Users, request
 	modelUser.FirstName = requestUser.FirstName
 	modelUser.LastName = requestUser.LastName
 	modelUser.Username = requestUser.Username
-
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(requestUser.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
-	modelUser.Password = string(hashedPassword)
 
 	modelUser.Gender = requestUser.Gender
 	modelUser.Age = requestUser.Age

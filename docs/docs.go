@@ -219,6 +219,59 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/users/update/{id}": {
+            "put": {
+                "description": "Update user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User update data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.RequestUpdateUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ResponseUser"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Error"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -258,6 +311,51 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "example": "P@ssw0rd123"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "johnsmith"
+                }
+            }
+        },
+        "requests.RequestUpdateUser": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "example": "123 Main Street, Apt 4B"
+                },
+                "age": {
+                    "type": "integer",
+                    "example": 28
+                },
+                "birthday": {
+                    "type": "string",
+                    "example": "1995-06-15T00:00:00Z"
+                },
+                "city": {
+                    "type": "string",
+                    "example": "San Francisco"
+                },
+                "country": {
+                    "type": "string",
+                    "example": "USA"
+                },
+                "first_name": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "gender": {
+                    "type": "string",
+                    "example": "male"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Smith"
+                },
+                "state": {
+                    "type": "string",
+                    "example": "CA"
                 },
                 "username": {
                     "type": "string",

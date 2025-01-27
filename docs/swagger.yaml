@@ -30,6 +30,39 @@ definitions:
         example: johnsmith
         type: string
     type: object
+  requests.RequestUpdateUser:
+    properties:
+      address:
+        example: 123 Main Street, Apt 4B
+        type: string
+      age:
+        example: 28
+        type: integer
+      birthday:
+        example: "1995-06-15T00:00:00Z"
+        type: string
+      city:
+        example: San Francisco
+        type: string
+      country:
+        example: USA
+        type: string
+      first_name:
+        example: John
+        type: string
+      gender:
+        example: male
+        type: string
+      last_name:
+        example: Smith
+        type: string
+      state:
+        example: CA
+        type: string
+      username:
+        example: johnsmith
+        type: string
+    type: object
   responses.Data:
     properties:
       code:
@@ -217,6 +250,41 @@ paths:
           schema:
             $ref: '#/definitions/responses.Error'
       summary: Register user
+      tags:
+      - Users
+  /users/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User update data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.RequestUpdateUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.ResponseUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/responses.Error'
+      summary: Update user
       tags:
       - Users
 swagger: "2.0"

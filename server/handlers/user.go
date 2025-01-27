@@ -8,6 +8,7 @@ import (
 	"photo-sharing-api/server"
 	"photo-sharing-api/services/users"
 	"photo-sharing-api/utils"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -121,6 +122,49 @@ func (handler *UserHandler) LoginByUsername(context *gin.Context) {
 	user := models.Users{}
 
 	if err := handler.Service.LoginByUsername(&user, &request); err != nil {
+		if err == utils.ErrUserNotFound {
+			responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgUserNotFound)
+		} else if err == utils.ErrInvalidPassword {
+			responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgInvalidPassword)
+		} else {
+			responses.ErrorResponse(context, http.StatusInternalServerError, utils.MsgFailedToLogin)
+		}
+		return
+	}
+
+	responses.NewResponseUser(context, http.StatusOK, user)
+}
+
+// Users godoc
+// @Summary Update user
+// @Schemes
+// @Description Update user
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Param request body requests.RequestUpdateUser true "User update data"
+// @Success 200 {object} responses.ResponseUser
+// @Failure 400 {object} responses.Error
+// @Failure 500 {object} responses.Error
+// @Router /users/update/{id} [put]
+func (handler *UserHandler) Update(context *gin.Context) {
+	id, err := strconv.ParseUint(context.Param("id"), 10, 64)
+	if err != nil {
+		responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgInvalidID)
+		return
+	}
+
+	request := requests.RequestUpdateUser{}
+
+	if err := context.ShouldBindJSON(&request); err != nil {
+		responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgInvalidRequestData)
+		return
+	}
+
+	user := models.Users{}
+
+	if err := handler.Service.Update(uint(id), &user, &request); err != nil {
 		if err == utils.ErrUserNotFound {
 			responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgUserNotFound)
 		} else if err == utils.ErrInvalidPassword {

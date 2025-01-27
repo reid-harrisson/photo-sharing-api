@@ -15,4 +15,5 @@ var (
 	MsgUserNotFound              = "User not found"
 	MsgInvalidPassword           = "Invalid password"
 	MsgFailedToLogin             = "Failed to login"
+	MsgInvalidID                 = "Invalid ID"
 )
