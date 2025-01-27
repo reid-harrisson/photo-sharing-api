@@ -1,5 +1,14 @@
 basePath: /api/v1
 definitions:
+  requests.RequestLogin:
+    properties:
+      email:
+        example: john.smith@example.com
+        type: string
+      password:
+        example: P@ssw0rd123
+        type: string
+    type: object
   requests.RequestRegister:
     properties:
       email:
@@ -111,6 +120,36 @@ paths:
       summary: Upload image to Supabase Storage
       tags:
       - Storage
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Login user
+      parameters:
+      - description: User login data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.RequestLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.ResponseUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/responses.Error'
+      summary: Login user
+      tags:
+      - Users
   /users/register:
     post:
       consumes:

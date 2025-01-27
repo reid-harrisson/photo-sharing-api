@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (service *UserService) Update(userId uint, modelUser *models.Users, requestUser *requests.RequestUser) error {
+func (service *UserService) Update(userId uint, modelUser *models.Users, requestUser *requests.RequestUpdateUser) error {
 	err := service.DB.First(modelUser, userId).Error
 	if err != nil {
 		return err
@@ -16,7 +16,6 @@ func (service *UserService) Update(userId uint, modelUser *models.Users, request
 
 	modelUser.FirstName = requestUser.FirstName
 	modelUser.LastName = requestUser.LastName
-	modelUser.Email = requestUser.Email
 	modelUser.Username = requestUser.Username
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(requestUser.Password), bcrypt.DefaultCost)
