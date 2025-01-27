@@ -12,4 +12,7 @@ var (
 	MsgFailedToGetPublicUrl      = "Failed to get public url"
 	MsgInvalidRequestData        = "Invalid request data"
 	MsgImageUploadedSuccessfully = "Image uploaded successfully!"
+	MsgUserNotFound              = "User not found"
+	MsgInvalidPassword           = "Invalid password"
+	MsgFailedToLogin             = "Failed to login"
 )
