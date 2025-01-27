@@ -29,6 +29,7 @@ func (service *UserService) Update(userId uint, modelUser *models.Users, request
 	modelUser.City = requestUser.City
 	modelUser.State = requestUser.State
 	modelUser.Country = requestUser.Country
+	modelUser.Avatar = requestUser.Avatar
 
 	return service.DB.Save(modelUser).Error
 }

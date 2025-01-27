@@ -21,6 +21,7 @@ type ResponseUser struct {
 	City      string `json:"city"`
 	State     string `json:"state"`
 	Country   string `json:"country"`
+	Avatar    string `json:"avatar"`
 }
 
 func NewResponseUser(context *gin.Context, statusCode int, user models.Users) {
@@ -43,6 +44,7 @@ func NewResponseUser(context *gin.Context, statusCode int, user models.Users) {
 		City:      user.City,
 		State:     user.State,
 		Country:   user.Country,
+		Avatar:    user.Avatar,
 	})
 }
 
@@ -63,6 +65,7 @@ func NewResponseUsers(context *gin.Context, statusCode int, users []models.Users
 			City:      user.City,
 			State:     user.State,
 			Country:   user.Country,
+			Avatar:    user.Avatar,
 		})
 	}
 

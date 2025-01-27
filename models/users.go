@@ -21,6 +21,7 @@ type Users struct {
 	City      string     `gorm:"city; type:varchar(100)"`
 	State     string     `gorm:"state; type:varchar(100)"`
 	Country   string     `gorm:"country; type:varchar(100)"`
+	Avatar    string     `gorm:"avatar; type:varchar(300)"`
 }
 
 func (Users) TableName() string {
