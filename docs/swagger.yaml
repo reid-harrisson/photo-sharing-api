@@ -9,6 +9,15 @@ definitions:
         example: P@ssw0rd123
         type: string
     type: object
+  requests.RequestLoginByUsername:
+    properties:
+      password:
+        example: P@ssw0rd123
+        type: string
+      username:
+        example: johnsmith
+        type: string
+    type: object
   requests.RequestRegister:
     properties:
       email:
@@ -148,6 +157,36 @@ paths:
           schema:
             $ref: '#/definitions/responses.Error'
       summary: Login user
+      tags:
+      - Users
+  /users/login-by-username:
+    post:
+      consumes:
+      - application/json
+      description: Login user by username
+      parameters:
+      - description: User login data by username
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.RequestLoginByUsername'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.ResponseUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/responses.Error'
+      summary: Login user by username
       tags:
       - Users
   /users/register:

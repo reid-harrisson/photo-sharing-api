@@ -121,6 +121,52 @@
                 }
             }
         },
+        "/users/login-by-username": {
+            "post": {
+                "description": "Login user by username",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login user by username",
+                "parameters": [
+                    {
+                        "description": "User login data by username",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/requests.RequestLoginByUsername"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/responses.ResponseUser"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/users/register": {
             "post": {
                 "description": "Register user",
@@ -179,6 +225,19 @@
                 "password": {
                     "type": "string",
                     "example": "P@ssw0rd123"
+                }
+            }
+        },
+        "requests.RequestLoginByUsername": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "example": "P@ssw0rd123"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "johnsmith"
                 }
             }
         },
