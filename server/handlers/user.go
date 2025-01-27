@@ -170,7 +170,7 @@ func (handler *UserHandler) Update(context *gin.Context) {
 		} else if err == utils.ErrInvalidPassword {
 			responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgInvalidPassword)
 		} else {
-			responses.ErrorResponse(context, http.StatusInternalServerError, utils.MsgFailedToLogin)
+			responses.ErrorResponse(context, http.StatusInternalServerError, utils.MsgFailedToUpdateUser)
 		}
 		return
 	}

@@ -11,6 +11,7 @@ type RequestUpdateUser struct {
 	City      string `json:"city" example:"San Francisco"`
 	State     string `json:"state" example:"CA"`
 	Country   string `json:"country" example:"USA"`
+	Avatar    string `json:"avatar" example:"https://fastly.picsum.photos/id/507/600/600.jpg?hmac=rOqut4F9CmwnmdZhtV_76pQXBEG5Y1wibCCKzxb5luk"`
 }
 
 type RequestRegister struct {

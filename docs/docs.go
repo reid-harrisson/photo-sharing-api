@@ -329,6 +329,10 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 28
                 },
+                "avatar": {
+                    "type": "string",
+                    "example": "https://fastly.picsum.photos/id/507/600/600.jpg?hmac=rOqut4F9CmwnmdZhtV_76pQXBEG5Y1wibCCKzxb5luk"
+                },
                 "birthday": {
                     "type": "string",
                     "example": "1995-06-15T00:00:00Z"
@@ -402,6 +406,9 @@ const docTemplate = `{
                 },
                 "age": {
                     "type": "integer"
+                },
+                "avatar": {
+                    "type": "string"
                 },
                 "birthday": {
                     "type": "string"
