@@ -7,6 +7,7 @@ import (
 	"photo-sharing-api/responses"
 	"photo-sharing-api/server"
 	"photo-sharing-api/services/storage"
+	"photo-sharing-api/utils"
 
 	"github.com/google/uuid"
 
@@ -41,13 +42,13 @@ func (handler *StorageHandler) UploadImage(context *gin.Context) {
 	// Get the file from the request
 	file, err := context.FormFile("image")
 	if err != nil {
-		responses.ErrorResponse(context, http.StatusBadRequest, "No file uploaded")
+		responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgNoFileUploaded)
 		return
 	}
 
 	// Validate file type
 	if !isValidImageType(file) {
-		responses.ErrorResponse(context, http.StatusBadRequest, "Invalid file type. Only images are allowed")
+		responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgInvalidFileType)
 		return
 	}
 
@@ -57,26 +58,26 @@ func (handler *StorageHandler) UploadImage(context *gin.Context) {
 	// Open the file
 	fileContent, err := file.Open()
 	if err != nil {
-		responses.ErrorResponse(context, http.StatusInternalServerError, "Error processing file")
+		responses.ErrorResponse(context, http.StatusInternalServerError, utils.MsgFailedToProcessFile)
 		return
 	}
 	defer fileContent.Close()
 
 	err = handler.Service.EnsureBucket()
 	if err != nil {
-		responses.ErrorResponse(context, http.StatusInternalServerError, "Error creating Supabase Bucket")
+		responses.ErrorResponse(context, http.StatusInternalServerError, utils.MsgFailedToEnsureBucket)
 		return
 	}
 
 	// Upload and get the public URL
 	publicURL, err := handler.Service.UploadImage(newFileName, fileContent)
 	if err != nil {
-		responses.ErrorResponse(context, http.StatusInternalServerError, "Error uploading to Supabase")
+		responses.ErrorResponse(context, http.StatusInternalServerError, utils.MsgFailedToUploadImage)
 		return
 	}
 
 	responses.Response(context, http.StatusOK, gin.H{
-		"message": "Image uploaded successfully!",
+		"message": utils.MsgImageUploadedSuccessfully,
 		"url":     publicURL,
 	})
 }

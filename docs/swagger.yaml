@@ -1,5 +1,17 @@
 basePath: /api/v1
 definitions:
+  requests.RequestRegister:
+    properties:
+      email:
+        example: john.smith@example.com
+        type: string
+      password:
+        example: P@ssw0rd123
+        type: string
+      username:
+        example: johnsmith
+        type: string
+    type: object
   responses.Data:
     properties:
       code:
@@ -18,6 +30,35 @@ definitions:
     properties:
       url:
         example: https://example.com/123.jpg
+        type: string
+    type: object
+  responses.ResponseUser:
+    properties:
+      address:
+        type: string
+      age:
+        type: integer
+      birthday:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      state:
+        type: string
+      username:
         type: string
     type: object
 info:
@@ -70,4 +111,34 @@ paths:
       summary: Upload image to Supabase Storage
       tags:
       - Storage
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: Register user
+      parameters:
+      - description: User registration data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.RequestRegister'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.ResponseUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/responses.Error'
+      summary: Register user
+      tags:
+      - Users
 swagger: "2.0"

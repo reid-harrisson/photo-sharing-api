@@ -35,10 +35,10 @@ func main() {
 	}
 
 	postgresUser, postgresHost, postgresPassword, postgresDatabase, postgresPort := os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_HOST"), os.Getenv("POSTGRES_PASSWORD"), os.Getenv("POSTGRES_DATABASE"), os.Getenv("POSTGRES_PORT")
-	if postgresUser == "" || postgresHost == "" || postgresPassword == "" || postgresDatabase == "" || postgresPort == "" {
-		log.Println("Failed to load environment.")
-		return
-	}
+	// if postgresUser == "" || postgresHost == "" || postgresPassword == "" || postgresDatabase == "" || postgresPort == "" {
+	// 	log.Println("Failed to load environment.")
+	// 	return
+	// }
 
 	supabaseClient := storage_go.NewClient(supabaseUrl+"/storage/v1", supabaseAnonKey, nil)
 	postgresDB := db.Init(postgresUser, postgresHost, postgresPassword, postgresDatabase, postgresPort)

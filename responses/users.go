@@ -15,8 +15,8 @@ type ResponseUser struct {
 	Email     string `json:"email"`
 	Username  string `json:"username"`
 	Gender    string `json:"gender"`
-	Age       uint8  `json:"age"`
-	Birthday  string `json:"birthday"`
+	Age       int    `json:"age"`
+	Birthday  string `json:"birthday,omitempty"`
 	Address   string `json:"address"`
 	City      string `json:"city"`
 	State     string `json:"state"`
@@ -24,6 +24,11 @@ type ResponseUser struct {
 }
 
 func NewResponseUser(context *gin.Context, statusCode int, user models.Users) {
+	var birthday string
+	if user.Birthday != nil {
+		birthday = user.Birthday.Format(time.RFC3339)
+	}
+
 	Response(context, statusCode, ResponseUser{
 		ID:        user.ID,
 		CreatedAt: user.CreatedAt.Format(time.RFC3339),
@@ -33,7 +38,7 @@ func NewResponseUser(context *gin.Context, statusCode int, user models.Users) {
 		Username:  user.Username,
 		Gender:    user.Gender,
 		Age:       user.Age,
-		Birthday:  user.Birthday.Format(time.RFC3339),
+		Birthday:  birthday,
 		Address:   user.Address,
 		City:      user.City,
 		State:     user.State,
