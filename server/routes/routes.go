@@ -22,6 +22,9 @@ func ConfigureRoutes(server *server.Server) {
 	groupStorage := apiV1.Group("/storage")
 	GroupStorage(groupStorage, server)
 
+	groupUsers := apiV1.Group("/users")
+	GroupUsers(groupUsers, server)
+
 	server.Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	server.Router.GET("/", func(context *gin.Context) {
@@ -37,4 +40,9 @@ func GroupHealth(group *gin.RouterGroup, server *server.Server) {
 func GroupStorage(group *gin.RouterGroup, server *server.Server) {
 	handler := handlers.NewStorageHandler(server)
 	group.POST("/", handler.UploadImage)
+}
+
+func GroupUsers(group *gin.RouterGroup, server *server.Server) {
+	handler := handlers.NewUserHandler(server)
+	group.POST("/register", handler.Register)
 }
