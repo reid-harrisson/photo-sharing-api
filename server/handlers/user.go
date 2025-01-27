@@ -97,3 +97,39 @@ func (handler *UserHandler) Login(context *gin.Context) {
 
 	responses.NewResponseUser(context, http.StatusOK, user)
 }
+
+// Users godoc
+// @Summary Login user by username
+// @Schemes
+// @Description Login user by username
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param request body requests.RequestLoginByUsername true "User login data by username"
+// @Success 200 {object} responses.ResponseUser
+// @Failure 400 {object} responses.Error
+// @Failure 500 {object} responses.Error
+// @Router /users/login-by-username [post]
+func (handler *UserHandler) LoginByUsername(context *gin.Context) {
+	request := requests.RequestLoginByUsername{}
+
+	if err := context.ShouldBindJSON(&request); err != nil {
+		responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgInvalidRequestData)
+		return
+	}
+
+	user := models.Users{}
+
+	if err := handler.Service.LoginByUsername(&user, &request); err != nil {
+		if err == utils.ErrUserNotFound {
+			responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgUserNotFound)
+		} else if err == utils.ErrInvalidPassword {
+			responses.ErrorResponse(context, http.StatusBadRequest, utils.MsgInvalidPassword)
+		} else {
+			responses.ErrorResponse(context, http.StatusInternalServerError, utils.MsgFailedToLogin)
+		}
+		return
+	}
+
+	responses.NewResponseUser(context, http.StatusOK, user)
+}

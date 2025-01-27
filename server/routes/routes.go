@@ -46,4 +46,5 @@ func GroupUsers(group *gin.RouterGroup, server *server.Server) {
 	handler := handlers.NewUserHandler(server)
 	group.POST("/register", handler.Register)
 	group.POST("/login", handler.Login)
+	group.POST("/login-by-username", handler.LoginByUsername)
 }

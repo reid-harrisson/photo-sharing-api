@@ -30,3 +30,18 @@ func (service *UserService) Login(modelUser *models.Users, requestUser *requests
 
 	return nil
 }
+
+func (service *UserService) LoginByUsername(modelUser *models.Users, requestUser *requests.RequestLoginByUsername) error {
+	service.DB.Where("username = ?", requestUser.Username).First(&modelUser)
+
+	if modelUser.ID == 0 {
+		return utils.ErrUserNotFound
+	}
+
+	err := bcrypt.CompareHashAndPassword([]byte(modelUser.Password), []byte(requestUser.Password))
+	if err != nil {
+		return utils.ErrInvalidPassword
+	}
+
+	return nil
+}
