@@ -28,7 +28,7 @@ func NewServer(supabaseClient *storage_go.Client, postgrestDB *gorm.DB) *Server 
 	}))
 
 	return &Server{
-		Router:         gin.Default(),
+		Router:         app,
 		SupabaseClient: supabaseClient,
 		DB:             postgrestDB,
 	}
